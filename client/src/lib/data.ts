@@ -2,7 +2,7 @@ export const movies = [
   {
     id: 1,
     title: "The Silent Echo",
-    genre: "Action / Sci-Fi",
+    genre: "Action, Sci-Fi",
     duration: "142 min",
     rating: "T16",
     image: "action",
@@ -10,12 +10,16 @@ export const movies = [
     director: "Jane Doe",
     cast: ["John Smith", "Alice Johnson", "Bob Brown"],
     imdb: 8.5,
-    status: "now_showing" // now_showing, coming_soon, special
+    status: "now_showing",
+    releaseDate: "2024-01-15",
+    formats: ["2D", "3D", "IMAX"],
+    technology: ["IMAX", "Dolby Atmos"],
+    showtimeStatus: "" // empty, sneak_show, last_chance
   },
   {
     id: 2,
     title: "Neon Dreams",
-    genre: "Sci-Fi / Thriller",
+    genre: "Sci-Fi, Thriller",
     duration: "128 min",
     rating: "T18",
     image: "scifi",
@@ -23,12 +27,16 @@ export const movies = [
     director: "Alan Smithee",
     cast: ["Eva Green", "Michael Chang"],
     imdb: 7.9,
-    status: "now_showing"
+    status: "now_showing",
+    releaseDate: "2024-02-10",
+    formats: ["2D", "3D", "4DX"],
+    technology: ["4DX", "ScreenX", "Dolby Atmos"],
+    showtimeStatus: "sneak_show"
   },
   {
     id: 3,
     title: "Whispering Woods",
-    genre: "Horror / Mystery",
+    genre: "Horror, Mystery",
     duration: "105 min",
     rating: "T18",
     image: "horror",
@@ -36,12 +44,16 @@ export const movies = [
     director: "Sam Raimi (Not really)",
     cast: ["Sarah Connor", "Ash Williams"],
     imdb: 6.8,
-    status: "coming_soon"
+    status: "coming_soon",
+    releaseDate: "2024-03-25",
+    formats: ["2D", "3D"],
+    technology: ["Dolby Atmos"],
+    showtimeStatus: "last_chance"
   },
   {
     id: 4,
     title: "Autumn Leaves",
-    genre: "Romance / Comedy",
+    genre: "Romance, Comedy",
     duration: "115 min",
     rating: "T13",
     image: "romcom",
@@ -49,8 +61,49 @@ export const movies = [
     director: "Nora Ephron",
     cast: ["Meg Ryan", "Tom Hanks"],
     imdb: 7.2,
-    status: "special"
+    status: "coming_soon",
+    releaseDate: "2024-03-10",
+    formats: ["2D"],
+    technology: [],
+    showtimeStatus: ""
   }
+];
+
+export const genres = [
+  "Action",
+  "Sci-Fi",
+  "Horror",
+  "Mystery",
+  "Romance",
+  "Comedy",
+  "Drama",
+  "Thriller",
+  "Animation",
+  "Documentary"
+];
+
+export const formats = [
+  "2D",
+  "3D",
+  "IMAX",
+  "4DX",
+  "ScreenX"
+];
+
+export const technologies = [
+  "IMAX",
+  "4DX",
+  "ScreenX",
+  "Dolby Atmos"
+];
+
+export const sortOptions = [
+  { id: "rating", label: "Rating (High to Low)" },
+  { id: "rating-asc", label: "Rating (Low to High)" },
+  { id: "release-newest", label: "Newest First" },
+  { id: "release-oldest", label: "Oldest First" },
+  { id: "title-asc", label: "Title (A to Z)" },
+  { id: "title-desc", label: "Title (Z to A)" }
 ];
 
 export const theaters = [

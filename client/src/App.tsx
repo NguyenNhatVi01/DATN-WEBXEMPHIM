@@ -7,6 +7,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
+import Movies from "@/pages/Movies";
 import MovieDetails from "@/pages/MovieDetails";
 import SeatSelection from "@/pages/SeatSelection";
 import Concessions from "@/pages/Concessions";
@@ -17,6 +18,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/movies" component={Movies} />
       <Route path="/movie/:id" component={MovieDetails} />
       <Route path="/booking/:id/seats" component={SeatSelection} />
       <Route path="/booking/:id/concessions" component={Concessions} />
