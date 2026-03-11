@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { Play, Calendar, MapPin, Search, Star, Clock } from "lucide-react";
+import { Play, Calendar, MapPin, Search, Star, Clock, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -23,23 +23,44 @@ const imageMap: Record<string, string> = {
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("now_showing");
+  const [watchlist, setWatchlist] = useState<number[]>([]);
+  
+  // Load watchlist from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem("watchlist");
+    if (saved) setWatchlist(JSON.parse(saved));
+  }, []);
+
+  // Save watchlist to localStorage
+  useEffect(() => {
+    localStorage.setItem("watchlist", JSON.stringify(watchlist));
+  }, [watchlist]);
   
   const featuredMovie = movies[0];
   const displayedMovies = movies.filter(m => 
     activeTab === "all" || m.status === activeTab
   );
 
+  const toggleWatchlist = (movieId: number) => {
+    setWatchlist(prev =>
+      prev.includes(movieId) ? prev.filter(id => id !== movieId) : [...prev, movieId]
+    );
+  };
+
   return (
     <div className="min-h-screen pb-20">
       {/* Hero Section */}
-      <section className="relative h-[80vh] flex items-center pt-16">
+      <section className="relative h-[80vh] flex items-center pt-16 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent z-10" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent z-20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background from-0% via-background/60 via-40% to-transparent z-20" />
+          <div className="absolute inset-0 bg-radial-gradient opacity-30 z-15" style={{
+            background: "radial-gradient(ellipse at center, rgba(225, 29, 72, 0.15) 0%, transparent 70%)"
+          }} />
           <img 
             src={heroBg} 
             alt="Hero Background" 
-            className="w-full h-full object-cover opacity-40"
+            className="w-full h-full object-cover opacity-50 scale-110 blur-sm"
           />
         </div>
         
@@ -119,32 +140,44 @@ export default function Home() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {displayedMovies.map((movie) => (
-              <Link key={movie.id} href={`/movie/${movie.id}`}>
-                <div className="group cursor-pointer relative">
-                  <div className="relative aspect-[3/4] rounded-xl overflow-hidden mb-4 border border-white/10 bg-black/50">
-                    {/* Fallback color if image is missing */}
-                    <div className="absolute inset-0 bg-muted/20 animate-pulse" />
-                    <img 
-                      src={imageMap[movie.image]} 
-                      alt={movie.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 relative z-10"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex flex-col justify-end p-4">
-                      <Button className="w-full gap-2" variant="secondary">
-                        <Ticket className="w-4 h-4" /> Get Tickets
-                      </Button>
-                    </div>
-                    <Badge className="absolute top-3 right-3 z-20 bg-black/60 backdrop-blur-md border-white/20">
-                      {movie.rating}
-                    </Badge>
+              <div key={movie.id} className="group cursor-pointer relative">
+                <div className="relative aspect-[3/4] rounded-xl overflow-hidden mb-4 border border-white/10 bg-black/50">
+                  {/* Fallback color if image is missing */}
+                  <div className="absolute inset-0 bg-muted/20 animate-pulse" />
+                  <img 
+                    src={imageMap[movie.image]} 
+                    alt={movie.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 relative z-10"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex flex-col justify-between p-4">
+                    <button
+                      onClick={() => toggleWatchlist(movie.id)}
+                      className="self-end text-white hover:scale-110 transition-transform"
+                    >
+                      <Heart className={`w-6 h-6 ${watchlist.includes(movie.id) ? 'fill-red-500 text-red-500' : 'text-white'}`} />
+                    </button>
+                    <Link href={`/movie/${movie.id}`}>
+                      <a className="w-full">
+                        <Button className="w-full gap-2" variant="secondary">
+                          <Ticket className="w-4 h-4" /> Get Tickets
+                        </Button>
+                      </a>
+                    </Link>
                   </div>
-                  <h3 className="font-semibold text-lg line-clamp-1 group-hover:text-primary transition-colors">{movie.title}</h3>
-                  <div className="flex items-center justify-between text-sm text-muted-foreground mt-1">
-                    <span>{movie.genre}</span>
-                    <span className="flex items-center gap-1"><Star className="w-3 h-3 text-yellow-500" /> {movie.imdb}</span>
-                  </div>
+                  <Badge className="absolute top-3 right-3 z-20 bg-black/60 backdrop-blur-md border-white/20">
+                    {movie.rating}
+                  </Badge>
                 </div>
-              </Link>
+                <Link href={`/movie/${movie.id}`}>
+                  <a className="block">
+                    <h3 className="font-semibold text-lg line-clamp-1 group-hover:text-primary transition-colors">{movie.title}</h3>
+                    <div className="flex items-center justify-between text-sm text-muted-foreground mt-1">
+                      <span>{movie.genre}</span>
+                      <span className="flex items-center gap-1"><Star className="w-3 h-3 text-yellow-500" /> {movie.imdb}</span>
+                    </div>
+                  </a>
+                </Link>
+              </div>
             ))}
           </div>
           {displayedMovies.length === 0 && (
