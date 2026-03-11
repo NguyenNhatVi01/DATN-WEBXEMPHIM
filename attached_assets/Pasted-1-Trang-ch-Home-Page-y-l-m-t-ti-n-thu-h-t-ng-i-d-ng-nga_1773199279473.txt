@@ -1,0 +1,86 @@
+1. Trang chủ (Home Page)
+Đây là "mặt tiền" để thu hút người dùng ngay từ cái nhìn đầu tiên.
+
+Banner Slide: Hiển thị các bộ phim "Bom tấn" đang hoặc sắp chiếu với hình ảnh/trailer bắt mắt.
+
+Bộ lọc nhanh (Quick Search): Chọn phim, rạp, và ngày chiếu ngay tại trang chủ để tìm suất chiếu nhanh.
+
+Danh mục phim: Chia thành các tab rõ rệt: Phim đang chiếu, Phim sắp chiếu, và Suất chiếu đặc biệt.
+
+Ưu đãi & Khuyến mãi: Các banner nhỏ hiển thị chương trình giảm giá hoặc combo bắp nước.
+
+2. Trang Chi tiết Phim (Movie Details)
+Cung cấp đầy đủ lý do để khách hàng quyết định nhấn nút "Đặt vé".
+
+Thông tin chung: Trailer, poster, đạo diễn, diễn viên, thời lượng, độ tuổi quy định (T13, T16, T18...).
+
+Nội dung tóm tắt: Một đoạn mô tả ngắn gọn nhưng hấp dẫn.
+
+Đánh giá & Review: Điểm số từ IMDb, Rotten Tomatoes hoặc đánh giá trực tiếp từ cộng đồng người dùng của trang web.
+
+Lịch chiếu theo rạp: Danh sách các cụm rạp, ngày chiếu và khung giờ còn trống.
+
+3. Giao diện Chọn Ghế (Seat Selection)
+Đây là phần quan trọng nhất về mặt tương tác.
+
+Sơ đồ phòng chiếu (Screen Map): Hiển thị trực quan vị trí màn hình và các loại ghế (Ghế thường, Ghế VIP, Ghế đôi/Sweetbox).
+
+Trạng thái ghế: Phân biệt rõ bằng màu sắc: Ghế trống, Ghế đang chọn, Ghế đã được đặt.
+
+Bảng giá thời gian thực: Hiển thị tổng tiền ngay khi người dùng chọn/hủy chọn ghế.
+
+4. Dịch vụ đi kèm (Concessions/F&B)
+Menu Bắp & Nước: Cho phép khách hàng chọn các combo bắp nước ngay trong quá trình đặt vé để tiết kiệm thời gian chờ đợi tại rạp.
+
+Tùy chỉnh Combo: Chọn vị bắp (phô mai, caramel...) hoặc size nước.
+
+5. Thanh toán & Xác nhận (Checkout)
+Tóm tắt đơn hàng: Hiển thị lại Phim, Rạp, Suất chiếu, Số ghế và Combo bắp nước để người dùng kiểm tra lần cuối.
+
+Cổng thanh toán đa dạng: Hỗ trợ Ví điện tử (Momo, ZaloPay), Thẻ ATM/Visa, hoặc quét mã QR.
+
+Nhập mã giảm giá: Ô áp dụng voucher hoặc điểm tích lũy thành viên.
+
+6. Trang Cá nhân & Vé của tôi (User Profile)
+Lịch sử đặt vé: Lưu trữ thông tin các phim đã xem.
+
+Vé điện tử (E-ticket): Hiển thị mã QR code để quét trực tiếp tại rạp mà không cần in vé giấy.
+
+Quản lý tài khoản: Thông tin cá nhân, hạng thành viên và điểm thưởng.
+
+
+MỞ RỘNG....
+1. Tính năng Cá nhân hóa (AI-Driven)
+Gợi ý phim thông minh (Recommendation System): Dựa trên lịch sử xem phim và thể loại yêu thích để đề xuất các phim đang chiếu phù hợp nhất.
+
+Thông báo "Phim sắp chiếu": Cho phép người dùng nhấn "Quan tâm" một bộ phim chưa ra mắt. Hệ thống sẽ tự động gửi thông báo qua Email/App ngay khi phim mở bán vé sớm.
+
+Quản lý danh sách yêu thích (Watchlist): Lưu lại những phim muốn xem nhưng chưa có thời gian đặt vé.
+
+2. Tính năng Cộng đồng & Đánh giá (Social & Review)
+Hệ thống Review chi tiết: Không chỉ chấm điểm 5 sao, mà còn cho phép người dùng viết bài đánh giá dài, upload ảnh chụp cuống vé để xác thực "Đã xem".
+
+Xếp hạng người dùng: Những người viết review chất lượng sẽ được gắn huy hiệu "Chuyên gia phê bình", giúp tăng uy tín cho trang web.
+
+Diễn đàn thảo luận (Forum/Comments): Khu vực dưới mỗi phim để người dùng bàn luận về trailer, plot twist (có cảnh báo nội dung trước - Spoiler Alert).
+
+3. Tính năng Nâng cao cho Trải nghiệm Đặt vé
+Đặt vé theo nhóm (Group Booking): Một người chủ trì (Host) tạo phòng đặt vé, gửi link cho bạn bè. Mọi người có thể tự chọn ghế của mình trong cùng một đơn hàng và chia tiền thanh toán (Split Bill).
+
+Chọn suất chiếu theo định dạng (Premium Filters): Bộ lọc sâu theo công nghệ chiếu như IMAX, 4DX, ScreenX, Gold Class hoặc Dolby Atmos.
+
+Giữ ghế tạm thời (Holding Seat): Cho phép giữ ghế trong vòng 5-10 phút để người dùng hoàn tất thanh toán hoặc chờ bạn bè xác nhận vị trí.
+
+4. Chương trình Khách hàng thân thiết (Loyalty Program)
+Thành viên đa cấp bậc: (Silver, Gold, Platinum) với các quyền ưu tiên như: Đặt vé sớm hơn người thường, miễn phí đổi/trả vé, hoặc tặng bỏng ngô ngày sinh nhật.
+
+Ví điện tử nội bộ (E-Wallet/Credit): Nạp tiền trước vào tài khoản để thanh toán cực nhanh (One-click payment) và nhận thêm chiết khấu.
+
+Săn Voucher/Minigame: Các trò chơi tương tác (như vòng quay may mắn) để nhận mã giảm giá hoặc vé miễn phí.
+
+5. Tiện ích bổ sung & Quản lý (Utilities)
+Chế độ tối (Dark Mode): Cực kỳ quan trọng với web giải trí/phim ảnh để làm nổi bật Poster phim.
+
+Bản đồ tích hợp: Tích hợp Google Maps để chỉ đường đến rạp gần nhất dựa trên vị trí hiện tại của người dùng.
+
+Trao đổi/Nhượng vé: Một khu vực an toàn để người dùng nhượng lại vé nếu bận đột xuất (tránh tình trạng phe vé chợ đen).
