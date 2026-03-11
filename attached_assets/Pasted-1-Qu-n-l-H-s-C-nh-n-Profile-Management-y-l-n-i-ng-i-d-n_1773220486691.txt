@@ -1,0 +1,59 @@
+1. Quản lý Hồ sơ Cá nhân (Profile Management)
+Đây là nơi người dùng cập nhật thông tin cơ bản để hệ thống phục vụ tốt hơn:
+
+Chỉnh sửa thông tin: Thay đổi tên hiển thị, số điện thoại (đã xác thực qua OTP), và email nhận vé.
+
+Cập nhật Avatar: Cho phép tải lên ảnh mới hoặc chọn các nhân vật hoạt hình/phim ảnh làm đại diện.
+
+Liên kết mạng xã hội: Kết nối với Facebook/Google để đăng nhập nhanh và chia sẻ hoạt động xem phim.
+
+2. Thiết lập Thanh toán & Ví (Payments & Wallet)
+Để việc đặt vé diễn ra "trong 1 nốt nhạc":
+
+Quản lý phương thức thanh toán: Lưu thẻ Visa/Mastercard hoặc liên kết sẵn các ví điện tử (Momo, ZaloPay, ShopeePay).
+
+Nạp tiền vào tài khoản Cinebook: Quản lý số dư tiền mặt trong app để hưởng ưu đãi chiết khấu riêng.
+
+Lịch sử giao dịch: Xem lại danh sách các hóa đơn đã thanh toán, bao gồm cả tiền vé và bắp nước.
+
+3. Cài đặt Thông báo & Riêng tư (Notifications & Privacy)
+Kiểm soát cách Cinebook tương tác với người dùng:
+
+Kênh thông báo: Chọn nhận tin nhắn qua App, Email hoặc SMS.
+
+Loại thông báo: * Nhắc lịch chiếu: Thông báo trước 30-60 phút khi phim bắt đầu.
+
+Ưu đãi thành viên: Tin nhắn về voucher hoặc chương trình nhân đôi điểm thưởng.
+
+Phim yêu thích: Thông báo khi phim trong Watchlist mở bán vé sớm.
+
+Chế độ riêng tư: Tùy chọn ẩn/hiện lịch sử xem phim với bạn bè trên hệ thống.
+
+4. Tùy chọn Trải nghiệm (App Preferences)
+Cá nhân hóa giao diện theo sở thích:
+
+Giao diện (Theme): Chuyển đổi giữa Dark Mode (mặc định) và Light Mode.
+
+Ngôn ngữ: Chọn Tiếng Việt hoặc Tiếng Anh.
+
+Rạp yêu thích mặc định: Thiết lập cụm rạp ưu tiên để hệ thống luôn hiển thị lịch chiếu của rạp đó trước.
+
+5. Trung tâm Thành viên & Ưu đãi (Membership Center)
+Dành riêng cho các hạng như Gold Member của Alex:
+
+Tiến trình thăng hạng: Biểu đồ hiển thị cần bao nhiêu điểm nữa để lên hạng Platinum.
+
+Đổi điểm thưởng: Danh sách các món quà hoặc voucher có thể đổi từ 2,450 điểm hiện có.
+
+Quyền lợi đặc biệt: Danh sách các đặc quyền mà hạng Gold đang sở hữu (VD: Giảm 10% bắp nước, miễn phí đổi vé...).
+
+Gợi ý bố cục (Layout):
+Thay vì một danh sách dài, bạn nên chia Settings thành các Tab bên trái (Vertical Tabs) để Alex dễ dàng thao tác:
+
+Chung: Hồ sơ, Ngôn ngữ, Giao diện.
+
+Bảo mật: Đổi mật khẩu, Xác thực 2 lớp.
+
+Thanh toán: Thẻ đã lưu, Ví điện tử.
+
+Hỗ trợ: Trung tâm trợ giúp, Điều khoản sử dụng, Đăng xuất.

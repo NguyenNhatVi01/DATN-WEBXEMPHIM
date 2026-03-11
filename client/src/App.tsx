@@ -7,6 +7,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
+import Auth from "@/pages/Auth";
 import Movies from "@/pages/Movies";
 import Theaters from "@/pages/Theaters";
 import MovieDetails from "@/pages/MovieDetails";
@@ -14,11 +15,13 @@ import SeatSelection from "@/pages/SeatSelection";
 import Concessions from "@/pages/Concessions";
 import Checkout from "@/pages/Checkout";
 import Profile from "@/pages/Profile";
+import Settings from "@/pages/Settings";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/auth" component={Auth} />
       <Route path="/movies" component={Movies} />
       <Route path="/theaters" component={Theaters} />
       <Route path="/movie/:id" component={MovieDetails} />
@@ -26,6 +29,7 @@ function Router() {
       <Route path="/booking/:id/concessions" component={Concessions} />
       <Route path="/booking/:id/checkout" component={Checkout} />
       <Route path="/profile" component={Profile} />
+      <Route path="/settings" component={Settings} />
       {/* Map tickets route to profile for now */}
       <Route path="/tickets" component={Profile} />
       <Route component={NotFound} />

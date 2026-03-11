@@ -44,10 +44,14 @@ export function Navbar() {
               <Ticket className="w-5 h-5" />
             </Button>
           </Link>
-          <Link href="/profile">
+          <Link href="/settings">
+            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+              <User className="w-5 h-5" />
+            </Button>
+          </Link>
+          <Link href="/auth">
             <Button variant="outline" className="border-white/20 hover:bg-white/10 hidden sm:flex gap-2">
-              <User className="w-4 h-4" />
-              <span>Profile</span>
+              <span>Sign In</span>
             </Button>
           </Link>
           {/* Mobile menu trigger could go here */}
