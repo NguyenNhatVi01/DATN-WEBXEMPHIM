@@ -1,0 +1,74 @@
+1. Tìm kiếm và Định vị (Location Services)
+Đây là tính năng cốt lõi để khách hàng tìm thấy rạp gần họ nhất.
+
+Tìm rạp gần đây (Near Me): Sử dụng GPS để tự động hiển thị danh sách các rạp trong bán kính 5-10km.
+
+Lọc theo Khu vực: Cho phép chọn theo Tỉnh/Thành phố và Quận/Huyện (VD: TP. Hồ Chí Minh > Quận 1).
+
+Tích hợp Bản đồ tương tác: Một bản đồ (Google Maps API) hiển thị các icon rạp Cinebook. Khi click vào icon sẽ hiện khung thông tin nhanh (tên rạp, địa chỉ, số điện thoại).
+
+2. Thông tin chi tiết của từng Rạp
+Thay vì chỉ liệt kê tên, mỗi rạp cần có một "trang con" hoặc một vùng thông tin chi tiết:
+
+Hình ảnh rạp: Slider ảnh về không gian sảnh chờ, phòng chiếu và quầy bắp nước.
+
+Tiện ích (Amenities): Hiển thị bằng các icon trực quan như: Bãi đỗ xe ô tô, Ghế massage, Khu vui chơi trẻ em, Wi-Fi miễn phí.
+
+Chỉ đường: Nút kết nối trực tiếp với ứng dụng Google Maps trên điện thoại.
+
+3. Lịch chiếu tại Rạp (Cinema Schedule)
+Tính năng này dành cho những người dùng có thói quen "chọn rạp trước, chọn phim sau":
+
+Lọc theo Ngày: Thanh chọn ngày (thứ, ngày/tháng) dạng trượt ngang.
+
+Danh sách Phim tại rạp đó: Hiển thị các phim đang chiếu tại rạp này kèm theo các khung giờ.
+
+Phân loại phòng chiếu: Ghi rõ suất chiếu đó là phòng IMAX, Gold Class, hay 2D thông thường.
+
+4. Tính năng mở rộng & "Ăn tiền" (Premium Features)
+Trạng thái "Rạp trống": Hiển thị mức độ đông đúc theo thời gian thực (VD: "Đang rất đông" hoặc "Còn nhiều chỗ").
+
+Giá vé tham khảo: Bảng giá vé theo đối tượng (Học sinh, người lớn) và theo ngày (Ngày thường vs Cuối tuần).
+
+Rạp yêu thích (Favorite Theater): Cho phép người dùng nhấn "Tim" để rạp đó luôn xuất hiện đầu tiên trong các lần truy cập sau.
+
+Đặt sự kiện/Thuê phòng chiếu: Tính năng dành cho doanh nghiệp hoặc nhóm bạn muốn tổ chức sinh nhật, hội thảo tại rạp.
+
+Bố cục giao diện đề xuất (Layout)
+Sidebar bên trái: Danh sách các rạp được phân loại theo Quận/Huyện, kèm thanh tìm kiếm.
+
+Khu vực trung tâm: * Phần trên: Bản đồ lớn chiếm 1/3 diện tích.
+
+Phần dưới: Thông tin chi tiết của rạp đang chọn và lịch chiếu phim của rạp đó.
+
+Thông tin liên hệ nhanh: Số hotline riêng của từng rạp và địa chỉ copy nhanh.
+
+Mở Rộng 
+1. Bản đồ Tương tác & Định vị Thông minh (Smart Geolocation)
+Chỉ đường thông minh (In-app Navigation): Tích hợp Google Maps API ngay trên giao diện để tính toán khoảng cách và thời gian di chuyển từ vị trí của người dùng đến từng cụm rạp.
+
+Bản đồ nhiệt (Crowd Density Map): Hiển thị mức độ đông đúc của rạp theo thời gian thực dựa trên số lượng vé đã bán, giúp khách hàng chọn rạp vắng vẻ hơn nếu muốn không gian yên tĩnh.
+
+Khu vực lân cận (Nearby Places): Hiển thị các nhà hàng, quán cafe hoặc bãi đỗ xe liên kết quanh rạp để người dùng lên kế hoạch cho cả buổi tối.
+
+2. Trải nghiệm Rạp số (Virtual Cinema Experience)
+Chế độ xem 360 độ (Virtual Tour): Cho phép người dùng xem trước không gian sảnh chờ và bên trong phòng chiếu (đặc biệt là các phòng cao cấp như Gold Class, Bed Cinema) để họ dễ dàng hình dung trước khi đặt.
+
+Tra cứu công nghệ phòng chiếu: Một bộ lọc chuyên sâu để tìm rạp có IMAX Laser, Dolby Cinema hoặc hệ thống âm thanh Dolby Atmos chuyên biệt.
+
+3. Cá nhân hóa & Tiện ích (User-Centric Features)
+Rạp yêu thích & Mặc định (Set as Default): Người dùng có thể đánh dấu rạp họ hay đi. Khi mở ứng dụng lần sau, lịch chiếu của rạp đó sẽ tự động hiển thị đầu tiên.
+
+Đặt dịch vụ trước (Pre-order Services): Cho phép đặt trước suất ăn tại rạp hoặc đặt chỗ gửi xe ngay trong giao diện trang Theaters.
+
+Bảng giá linh hoạt (Dynamic Pricing View): Hiển thị biểu đồ giá vé theo các khung giờ trong ngày tại rạp đó để khách hàng chọn thời điểm có giá tốt nhất (ví dụ: ngày hội thành viên, suất chiếu sáng sớm/khuya).
+
+4. Kết nối & Xã hội (Social & Feedback)
+Đánh giá chất lượng rạp (Cinema Review): Khách hàng có thể để lại phản hồi riêng về chất lượng phục vụ, độ sạch sẽ, hoặc độ sắc nét của màn hình tại cụm rạp đó.
+
+Check-in & Ưu đãi: Tính năng check-in tại rạp để nhận điểm thưởng hoặc voucher giảm giá bắp nước ngay tức thì.
+
+5. Quản lý Sự kiện & Nhóm (Event Management)
+Thuê rạp trực tuyến (Private Booking): Một giao diện riêng cho phép người dùng hoặc doanh nghiệp yêu cầu báo giá thuê trọn phòng chiếu để tổ chức sự kiện, sinh nhật, hoặc xem phim nhóm.
+
+Tìm bạn đồng hành (Find a Buddy): Một khu vực nhỏ hiển thị những người cũng đang có ý định đến rạp đó vào khung giờ đó (dành cho người dùng muốn kết bạn xem phim cùng).

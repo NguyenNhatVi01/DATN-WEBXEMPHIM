@@ -107,9 +107,89 @@ export const sortOptions = [
 ];
 
 export const theaters = [
-  { id: 1, name: "Cineplex Central", distance: "2.5 km" },
-  { id: 2, name: "Starlight Arena", distance: "4.1 km" },
-  { id: 3, name: "Galaxy ScreenX", distance: "6.8 km" }
+  { 
+    id: 1, 
+    name: "Cineplex Central", 
+    distance: "2.5 km",
+    address: "123 Nguyen Hue Blvd, District 1, Ho Chi Minh City",
+    phone: "(028) 3822-1234",
+    district: "District 1"
+  },
+  { 
+    id: 2, 
+    name: "Starlight Arena", 
+    distance: "4.1 km",
+    address: "456 Le Loi Street, District 3, Ho Chi Minh City",
+    phone: "(028) 3829-5678",
+    district: "District 3"
+  },
+  { 
+    id: 3, 
+    name: "Galaxy ScreenX", 
+    distance: "6.8 km",
+    address: "789 Tran Hung Dao Road, District 2, Ho Chi Minh City",
+    phone: "(028) 3845-9012",
+    district: "District 2"
+  },
+  { 
+    id: 4, 
+    name: "Premier Gold Class", 
+    distance: "3.2 km",
+    address: "321 Cach Mang Thang 8, Binh Thanh, Ho Chi Minh City",
+    phone: "(028) 3512-3456",
+    district: "Binh Thanh"
+  },
+  { 
+    id: 5, 
+    name: "Mega Cinema Hub", 
+    distance: "5.5 km",
+    address: "654 Dien Bien Phu, Tan Binh, Ho Chi Minh City",
+    phone: "(028) 3844-7890",
+    district: "Tan Binh"
+  }
+];
+
+export const theaterDetails = [
+  {
+    id: 1,
+    name: "Cineplex Central",
+    amenities: ["Free WiFi", "Parking Available", "Massage Seats", "Kids Play Area"],
+    rating: 4.8,
+    reviews: 342,
+    technologies: ["IMAX", "4DX", "Dolby Atmos"]
+  },
+  {
+    id: 2,
+    name: "Starlight Arena",
+    amenities: ["Free WiFi", "Premium Parking", "Gold Class Seats"],
+    rating: 4.6,
+    reviews: 289,
+    technologies: ["ScreenX", "Dolby Cinema"]
+  },
+  {
+    id: 3,
+    name: "Galaxy ScreenX",
+    amenities: ["Valet Parking", "Premium Lounge", "Massage Seats"],
+    rating: 4.9,
+    reviews: 415,
+    technologies: ["ScreenX", "4DX", "Dolby Atmos"]
+  },
+  {
+    id: 4,
+    name: "Premier Gold Class",
+    amenities: ["Complimentary Parking", "Luxury Lounge", "Premium Seats", "WiFi"],
+    rating: 4.7,
+    reviews: 198,
+    technologies: ["Gold Class", "Dolby Atmos"]
+  },
+  {
+    id: 5,
+    name: "Mega Cinema Hub",
+    amenities: ["Free Parking", "Kids Zone", "WiFi", "Food Court"],
+    rating: 4.5,
+    reviews: 267,
+    technologies: ["IMAX", "3D", "Dolby Atmos"]
+  }
 ];
 
 export const showtimes = [

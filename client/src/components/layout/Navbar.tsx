@@ -27,9 +27,11 @@ export function Navbar() {
                 Movies
               </a>
             </Link>
-            <a href="#" className={`text-sm font-medium transition-colors hover:text-primary text-muted-foreground`}>
-              Theaters
-            </a>
+            <Link href="/theaters">
+              <a className={`text-sm font-medium transition-colors hover:text-primary ${location.startsWith('/theaters') ? 'text-primary' : 'text-muted-foreground'}`}>
+                Theaters
+              </a>
+            </Link>
           </div>
         </div>
 
