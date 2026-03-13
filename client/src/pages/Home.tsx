@@ -53,7 +53,7 @@ export default function Home() {
       <section className="relative h-[80vh] flex items-center pt-16 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent z-20" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background from-0% via-background/60 via-40% to-transparent z-20 text-[#cecece]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background from-0% via-background/60 via-40% to-transparent z-20 text-[#fafafa]" />
           <div className="absolute inset-0 bg-radial-gradient opacity-30 z-15" style={{
             background: "radial-gradient(ellipse at center, rgba(225, 29, 72, 0.15) 0%, transparent 70%)"
           }} />
