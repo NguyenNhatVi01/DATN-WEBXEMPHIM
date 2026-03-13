@@ -53,7 +53,7 @@ export default function Home() {
       <section className="relative h-[80vh] flex items-center pt-16 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent z-20" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background from-0% via-background/60 via-40% to-transparent z-20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background from-0% via-background/60 via-40% to-transparent z-20 text-[#cecece]" />
           <div className="absolute inset-0 bg-radial-gradient opacity-30 z-15" style={{
             background: "radial-gradient(ellipse at center, rgba(225, 29, 72, 0.15) 0%, transparent 70%)"
           }} />
@@ -95,7 +95,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Quick Search / Booking Filter */}
       <section className="container mx-auto px-4 -mt-16 relative z-30">
         <div className="bg-card/40 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-2xl">
@@ -125,7 +124,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Movie List Section */}
       <section className="container mx-auto px-4 mt-20">
         <Tabs defaultValue="now_showing" className="w-full" onValueChange={setActiveTab}>
@@ -187,7 +185,6 @@ export default function Home() {
           )}
         </Tabs>
       </section>
-
       {/* Promos Section */}
       <section className="container mx-auto px-4 mt-24">
         <h2 className="text-2xl font-bold tracking-tight mb-6">Offers & Promotions</h2>
