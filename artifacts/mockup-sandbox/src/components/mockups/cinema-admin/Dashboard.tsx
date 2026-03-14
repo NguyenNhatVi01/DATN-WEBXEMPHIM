@@ -120,6 +120,12 @@ export function Dashboard() {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [showQuickAdd, setShowQuickAdd] = useState(false);
+  // Rooms: seat selection + price editing
+  const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+  const [seatPrices, setSeatPrices] = useState({ normal: "95.000", vip: "150.000", sweetbox: "280.000" });
+  const [showPricePanel, setShowPricePanel] = useState(false);
+  const [priceApplied, setPriceApplied] = useState(false);
 
   const bg = darkMode ? "#0d0d0f" : "#f4f5f7";
   const surface = darkMode ? "#161618" : "#ffffff";
@@ -258,9 +264,52 @@ export function Dashboard() {
             <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <div><h1 style={{ fontSize: 22, fontWeight: 700, margin: 0 }}>Tổng quan hôm nay</h1><p style={{ margin: "4px 0 0", color: textMuted, fontSize: 13 }}>Thứ Bảy, 14 tháng 3 năm 2026</p></div>
-                <div style={{ display: "flex", gap: 10 }}>
-                  <button style={{ padding: "8px 14px", background: surface, border: `1px solid ${border}`, borderRadius: 8, color: text, cursor: "pointer", fontSize: 13 }}>Xuất báo cáo</button>
-                  <button style={{ padding: "8px 14px", background: PRIMARY, border: "none", borderRadius: 8, color: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 600 }}>+ Thêm mới</button>
+                <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                  <button style={{ padding: "8px 14px", background: surface, border: `1px solid ${border}`, borderRadius: 8, color: text, cursor: "pointer", fontSize: 13, display: "flex", alignItems: "center", gap: 6 }}>
+                    <Download size={14} /> Xuất báo cáo
+                  </button>
+                  {/* Quick-add dropdown */}
+                  <div style={{ position: "relative" }}>
+                    <button
+                      onClick={() => setShowQuickAdd(!showQuickAdd)}
+                      style={{ padding: "8px 16px", background: PRIMARY, border: "none", borderRadius: 8, color: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 600, display: "flex", alignItems: "center", gap: 8 }}
+                    >
+                      <Plus size={16} /> Thêm mới <ChevronDown size={14} style={{ transition: "transform 0.2s", transform: showQuickAdd ? "rotate(180deg)" : "rotate(0deg)" }} />
+                    </button>
+                    {showQuickAdd && (
+                      <div style={{ position: "absolute", right: 0, top: 44, width: 240, background: surface, border: `1px solid ${border}`, borderRadius: 14, boxShadow: "0 12px 32px rgba(0,0,0,0.4)", zIndex: 200, overflow: "hidden" }}>
+                        <div style={{ padding: "10px 14px 8px", fontSize: 11, fontWeight: 700, color: textMuted, textTransform: "uppercase", letterSpacing: 1 }}>Thêm nhanh</div>
+                        {[
+                          { icon: <Film size={16} />, label: "Thêm phim mới", desc: "Thêm phim vào hệ thống", color: "#17A2B8", action: () => { setShowMovieForm(true); setShowQuickAdd(false); } },
+                          { icon: <Calendar size={16} />, label: "Thêm suất chiếu", desc: "Lên lịch phim mới", color: "#28A745", action: () => { setShowShowtimeForm(true); setShowQuickAdd(false); } },
+                          { icon: <UserPlus size={16} />, label: "Thêm người dùng", desc: "Tạo tài khoản khách hàng", color: "#FFC107", action: () => { setShowUserForm(true); setShowQuickAdd(false); } },
+                          { icon: <Ticket size={16} />, label: "Tạo vé thủ công", desc: "Xuất vé tại quầy", color: PRIMARY, action: () => setShowQuickAdd(false) },
+                        ].map((item, i) => (
+                          <button
+                            key={i}
+                            onClick={item.action}
+                            style={{ display: "flex", alignItems: "center", gap: 12, padding: "11px 16px", background: "none", border: "none", cursor: "pointer", width: "100%", textAlign: "left", transition: "background 0.1s" }}
+                            onMouseEnter={e => (e.currentTarget.style.background = surface2)}
+                            onMouseLeave={e => (e.currentTarget.style.background = "none")}
+                          >
+                            <div style={{ width: 36, height: 36, background: `${item.color}20`, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", color: item.color, flexShrink: 0 }}>{item.icon}</div>
+                            <div>
+                              <div style={{ fontSize: 13, fontWeight: 600, color: text }}>{item.label}</div>
+                              <div style={{ fontSize: 11, color: textMuted, marginTop: 1 }}>{item.desc}</div>
+                            </div>
+                          </button>
+                        ))}
+                        <div style={{ borderTop: `1px solid ${border}`, padding: "8px 14px 10px" }}>
+                          <button
+                            onClick={() => { setActiveModule("reports"); setShowQuickAdd(false); }}
+                            style={{ width: "100%", padding: "8px 12px", background: surface2, border: `1px solid ${border}`, borderRadius: 8, color: textMuted, fontSize: 12, cursor: "pointer", textAlign: "center" as const }}
+                          >
+                            Xem toàn bộ báo cáo →
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 }}>
@@ -512,59 +561,245 @@ export function Dashboard() {
           {/* ROOMS */}
           {activeModule === "rooms" && (
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-              <div><h1 style={{ fontSize: 22, fontWeight: 700, margin: 0 }}>Sơ đồ Phòng chiếu</h1><p style={{ margin: "4px 0 0", color: textMuted, fontSize: 13 }}>Quản lý ghế và định giá theo loại ghế</p></div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 20 }}>
-                <div style={{ background: surface, border: `1px solid ${border}`, borderRadius: 12, padding: 20 }}>
-                  <h3 style={{ margin: "0 0 14px", fontSize: 14, fontWeight: 600 }}>Danh sách phòng</h3>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                    {[{ id: 1, name: "Phòng 1 (IMAX)", seats: 180, type: "IMAX" }, { id: 2, name: "Phòng 2 (3D)", seats: 120, type: "3D" }, { id: 3, name: "Phòng 3", seats: 150, type: "2D" }, { id: 4, name: "Phòng 4", seats: 100, type: "2D" }, { id: 5, name: "Phòng 5 (VIP)", seats: 80, type: "VIP" }].map(room => (
-                      <button key={room.id} onClick={() => setSelectedRoom(room.id)} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 14px", borderRadius: 8, border: `1px solid ${selectedRoom === room.id ? PRIMARY : border}`, background: selectedRoom === room.id ? `${PRIMARY}15` : surface2, cursor: "pointer", textAlign: "left" as const }}>
-                        <Building2 size={18} color={selectedRoom === room.id ? PRIMARY : textMuted} />
-                        <div style={{ flex: 1 }}><div style={{ fontSize: 13, fontWeight: 600, color: text }}>{room.name}</div><div style={{ fontSize: 11, color: textMuted, marginTop: 2 }}>{room.seats} ghế · {room.type}</div></div>
-                        {selectedRoom === room.id && <ChevronRight size={14} color={PRIMARY} />}
-                      </button>
-                    ))}
-                  </div>
-                  <div style={{ marginTop: 20, paddingTop: 16, borderTop: `1px solid ${border}` }}>
-                    <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>Bảng giá vé</h4>
-                    {[{ type: "Ghế thường (Ngày thường)", price: "95.000đ", color: "#6b7280" }, { type: "Ghế thường (Cuối tuần)", price: "120.000đ", color: "#6b7280" }, { type: "Ghế VIP (Ngày thường)", price: "150.000đ", color: "#FFC107" }, { type: "Ghế VIP (Cuối tuần)", price: "180.000đ", color: "#FFC107" }, { type: "Ghế Đôi (Sweetbox)", price: "280.000đ", color: PRIMARY }].map(p => (
-                      <div key={p.type} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "7px 0", borderBottom: `1px solid ${border}` }}><span style={{ fontSize: 12, color: textMuted }}>{p.type}</span><span style={{ fontSize: 12, fontWeight: 700, color: p.color }}>{p.price}</span></div>
-                    ))}
-                  </div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div><h1 style={{ fontSize: 22, fontWeight: 700, margin: 0 }}>Sơ đồ Phòng chiếu</h1><p style={{ margin: "4px 0 0", color: textMuted, fontSize: 13 }}>Chọn ghế để chỉnh giá · Phòng {selectedRoom}</p></div>
+                <div style={{ display: "flex", gap: 10 }}>
+                  {selectedSeats.length > 0 && (
+                    <button
+                      onClick={() => setShowPricePanel(true)}
+                      style={{ padding: "9px 16px", background: "#FFC107", border: "none", borderRadius: 8, color: "#000", cursor: "pointer", fontSize: 13, fontWeight: 600, display: "flex", alignItems: "center", gap: 6 }}
+                    >
+                      <DollarSign size={15} /> Đặt giá ({selectedSeats.length} ghế)
+                    </button>
+                  )}
+                  <button
+                    onClick={() => setSelectedSeats([])}
+                    style={{ padding: "9px 14px", background: surface, border: `1px solid ${border}`, borderRadius: 8, color: text, cursor: "pointer", fontSize: 13, display: "flex", alignItems: "center", gap: 6 }}
+                  >
+                    <X size={14} /> Bỏ chọn
+                  </button>
                 </div>
-                <div style={{ background: surface, border: `1px solid ${border}`, borderRadius: 12, padding: 20 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-                    <h3 style={{ margin: 0, fontSize: 14, fontWeight: 600 }}>Sơ đồ phòng {selectedRoom}</h3>
-                    <div style={{ display: "flex", gap: 12, fontSize: 11 }}>
-                      {[{ color: "#28A74530", b: "#28A745", label: "Trống" }, { color: "#6b728030", b: "#6b7280", label: "Đã đặt" }, { color: "#FFC10730", b: "#FFC107", label: "VIP" }, { color: `${PRIMARY}30`, b: PRIMARY, label: "Sweetbox" }].map(s => (
-                        <div key={s.label} style={{ display: "flex", alignItems: "center", gap: 4 }}><div style={{ width: 12, height: 12, background: s.color, border: `1.5px solid ${s.b}`, borderRadius: 2 }} /><span style={{ color: textMuted }}>{s.label}</span></div>
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "220px 1fr", gap: 20 }}>
+                {/* Left: room list */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  <div style={{ background: surface, border: `1px solid ${border}`, borderRadius: 12, padding: 16 }}>
+                    <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, color: textMuted, textTransform: "uppercase" as const, letterSpacing: 0.8 }}>Danh sách phòng</h3>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                      {[{ id: 1, name: "Phòng 1", sub: "IMAX · 180 ghế", color: "#17A2B8" }, { id: 2, name: "Phòng 2", sub: "3D · 120 ghế", color: "#28A745" }, { id: 3, name: "Phòng 3", sub: "2D · 150 ghế", color: "#6b7280" }, { id: 4, name: "Phòng 4", sub: "2D · 100 ghế", color: "#6b7280" }, { id: 5, name: "Phòng 5", sub: "VIP · 80 ghế", color: "#FFC107" }].map(room => (
+                        <button key={room.id} onClick={() => { setSelectedRoom(room.id); setSelectedSeats([]); }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", borderRadius: 8, border: `1px solid ${selectedRoom === room.id ? PRIMARY : border}`, background: selectedRoom === room.id ? `${PRIMARY}15` : "transparent", cursor: "pointer", textAlign: "left" as const }}>
+                          <div style={{ width: 8, height: 8, borderRadius: "50%", background: room.color, flexShrink: 0 }} />
+                          <div style={{ flex: 1 }}>
+                            <div style={{ fontSize: 13, fontWeight: 600, color: selectedRoom === room.id ? PRIMARY : text }}>{room.name}</div>
+                            <div style={{ fontSize: 11, color: textMuted }}>{room.sub}</div>
+                          </div>
+                          {selectedRoom === room.id && <ChevronRight size={13} color={PRIMARY} />}
+                        </button>
                       ))}
                     </div>
                   </div>
-                  <div style={{ textAlign: "center", marginBottom: 20 }}>
-                    <div style={{ height: 8, background: `linear-gradient(90deg, transparent, ${textMuted}60, transparent)`, borderRadius: 4, marginBottom: 6 }} />
-                    <div style={{ fontSize: 11, color: textMuted }}>MÀN HÌNH</div>
+
+                  {/* Price table */}
+                  <div style={{ background: surface, border: `1px solid ${border}`, borderRadius: 12, padding: 16 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                      <h3 style={{ margin: 0, fontSize: 13, fontWeight: 600, color: textMuted, textTransform: "uppercase" as const, letterSpacing: 0.8 }}>Giá vé hiện tại</h3>
+                      <button onClick={() => setShowPricePanel(true)} style={{ fontSize: 11, color: PRIMARY, background: "none", border: "none", cursor: "pointer", fontWeight: 600 }}>Sửa</button>
+                    </div>
+                    {[
+                      { label: "Ghế thường", price: seatPrices.normal, color: "#28A745" },
+                      { label: "Ghế VIP", price: seatPrices.vip, color: "#FFC107" },
+                      { label: "Sweetbox", price: seatPrices.sweetbox, color: PRIMARY },
+                    ].map(p => (
+                      <div key={p.label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 0", borderBottom: `1px solid ${border}` }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                          <div style={{ width: 8, height: 8, borderRadius: 2, background: p.color }} />
+                          <span style={{ fontSize: 12, color: textMuted }}>{p.label}</span>
+                        </div>
+                        <span style={{ fontSize: 12, fontWeight: 700, color: p.color }}>{p.price}đ</span>
+                      </div>
+                    ))}
+                    {priceApplied && (
+                      <div style={{ marginTop: 10, padding: "6px 10px", background: "#28A74520", border: "1px solid #28A74540", borderRadius: 6, display: "flex", alignItems: "center", gap: 6 }}>
+                        <CheckCircle2 size={12} color="#28A745" /><span style={{ fontSize: 11, color: "#28A745" }}>Đã cập nhật giá</span>
+                      </div>
+                    )}
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 6, alignItems: "center" }}>
+                </div>
+
+                {/* Right: seat map */}
+                <div style={{ background: surface, border: `1px solid ${border}`, borderRadius: 12, padding: 20 }}>
+                  {/* Legend + selection info */}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+                    <div style={{ display: "flex", gap: 14, fontSize: 11 }}>
+                      {[
+                        { bg: "#28A74520", b: "#28A745", label: "Trống" },
+                        { bg: "#2a2a2e", b: "#6b7280", label: "Đã đặt" },
+                        { bg: "#FFC10725", b: "#FFC107", label: "VIP" },
+                        { bg: `${PRIMARY}22`, b: PRIMARY, label: "Sweetbox" },
+                        { bg: "#6366f125", b: "#6366f1", label: "Đang chọn" },
+                      ].map(s => (
+                        <div key={s.label} style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                          <div style={{ width: 13, height: 13, background: s.bg, border: `1.5px solid ${s.b}`, borderRadius: 3 }} />
+                          <span style={{ color: textMuted }}>{s.label}</span>
+                        </div>
+                      ))}
+                    </div>
+                    {selectedSeats.length > 0 && (
+                      <div style={{ padding: "5px 12px", background: "#6366f120", border: "1px solid #6366f140", borderRadius: 20, fontSize: 12, color: "#a5b4fc", fontWeight: 600 }}>
+                        {selectedSeats.length} ghế đang chọn
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Screen */}
+                  <div style={{ textAlign: "center", marginBottom: 20 }}>
+                    <div style={{ height: 6, background: `linear-gradient(90deg, transparent 0%, ${textMuted}50 20%, ${textMuted}80 50%, ${textMuted}50 80%, transparent 100%)`, borderRadius: 4, marginBottom: 6, maxWidth: 500, margin: "0 auto 6px" }} />
+                    <div style={{ fontSize: 10, color: textMuted, letterSpacing: 3, textTransform: "uppercase" as const }}>Màn hình</div>
+                  </div>
+
+                  {/* Seat grid */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: 5, alignItems: "center" }}>
                     {seatMap.map((row, ri) => (
-                      <div key={ri} style={{ display: "flex", gap: 4, alignItems: "center" }}>
-                        <span style={{ width: 18, fontSize: 11, color: textMuted, textAlign: "right", flexShrink: 0 }}>{String.fromCharCode(65 + ri)}</span>
+                      <div key={ri} style={{ display: "flex", gap: 3, alignItems: "center" }}>
+                        <span style={{ width: 20, fontSize: 11, color: textMuted, textAlign: "right" as const, flexShrink: 0, fontWeight: 600 }}>{String.fromCharCode(65 + ri)}</span>
+                        <div style={{ width: 8 }} />
                         {row.map(seat => {
-                          const sc = seat.status === "booked" ? "#6b7280" : seat.type === "vip" ? "#FFC107" : seat.type === "sweetbox" ? PRIMARY : "#28A745";
-                          const sb = seat.status === "booked" ? "#6b728030" : seat.type === "vip" ? "#FFC10730" : seat.type === "sweetbox" ? `${PRIMARY}30` : "#28A74530";
-                          return <div key={seat.id} title={seat.id} style={{ width: seat.type === "sweetbox" ? 28 : 22, height: 20, background: sb, border: `1.5px solid ${sc}`, borderRadius: 4, cursor: seat.status === "available" ? "pointer" : "not-allowed" }} />;
+                          const isSelected = selectedSeats.includes(seat.id);
+                          const isBooked = seat.status === "booked";
+                          let bg: string, bd: string;
+                          if (isSelected) { bg = "#6366f125"; bd = "#6366f1"; }
+                          else if (isBooked) { bg = "#2a2a2e"; bd = "#6b7280"; }
+                          else if (seat.type === "vip") { bg = "#FFC10725"; bd = "#FFC107"; }
+                          else if (seat.type === "sweetbox") { bg = `${PRIMARY}22`; bd = PRIMARY; }
+                          else { bg = "#28A74520"; bd = "#28A745"; }
+                          return (
+                            <div
+                              key={seat.id}
+                              title={`${seat.id} · ${seat.type === "vip" ? "VIP" : seat.type === "sweetbox" ? "Sweetbox" : "Thường"}`}
+                              onClick={() => {
+                                if (isBooked) return;
+                                setSelectedSeats(prev =>
+                                  isSelected ? prev.filter(s => s !== seat.id) : [...prev, seat.id]
+                                );
+                              }}
+                              style={{
+                                width: seat.type === "sweetbox" ? 28 : 22,
+                                height: 18,
+                                background: bg,
+                                border: `1.5px solid ${bd}`,
+                                borderRadius: 4,
+                                cursor: isBooked ? "not-allowed" : "pointer",
+                                transition: "transform 0.1s",
+                                transform: isSelected ? "scale(1.15)" : "scale(1)",
+                                boxShadow: isSelected ? `0 0 6px ${bd}80` : "none",
+                              }}
+                            />
+                          );
                         })}
-                        <span style={{ width: 18, fontSize: 11, color: textMuted, flexShrink: 0 }}>{String.fromCharCode(65 + ri)}</span>
+                        <div style={{ width: 8 }} />
+                        <span style={{ width: 20, fontSize: 11, color: textMuted, flexShrink: 0, fontWeight: 600 }}>{String.fromCharCode(65 + ri)}</span>
                       </div>
                     ))}
                   </div>
-                  <div style={{ display: "flex", gap: 10, marginTop: 16, justifyContent: "flex-end" }}>
-                    <button style={{ padding: "8px 14px", background: surface2, border: `1px solid ${border}`, borderRadius: 8, color: text, cursor: "pointer", fontSize: 13 }}>Đặt lại</button>
-                    <button style={{ padding: "8px 14px", background: PRIMARY, border: "none", borderRadius: 8, color: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 600 }}>Lưu sơ đồ</button>
+
+                  {/* Row labels: type callouts */}
+                  <div style={{ marginTop: 14, display: "flex", gap: 10, justifyContent: "center", fontSize: 11 }}>
+                    <span style={{ color: "#FFC107" }}>Hàng A–B: VIP</span>
+                    <span style={{ color: textMuted }}>·</span>
+                    <span style={{ color: "#c4c4c8" }}>Hàng C–F: Thường</span>
+                    <span style={{ color: textMuted }}>·</span>
+                    <span style={{ color: PRIMARY }}>Hàng G–H: Sweetbox</span>
+                  </div>
+
+                  {/* Action bar */}
+                  <div style={{ display: "flex", gap: 10, marginTop: 18, justifyContent: "space-between", alignItems: "center", paddingTop: 16, borderTop: `1px solid ${border}` }}>
+                    <div style={{ display: "flex", gap: 8 }}>
+                      <button onClick={() => { const all = seatMap.flat().filter(s => s.status === "available").map(s => s.id); setSelectedSeats(all); }} style={{ padding: "7px 12px", background: surface2, border: `1px solid ${border}`, borderRadius: 8, color: text, cursor: "pointer", fontSize: 12 }}>Chọn tất cả</button>
+                      <button onClick={() => setSelectedSeats(seatMap.flat().filter(s => s.type === "vip" && s.status === "available").map(s => s.id))} style={{ padding: "7px 12px", background: "#FFC10715", border: "1px solid #FFC10740", borderRadius: 8, color: "#FFC107", cursor: "pointer", fontSize: 12 }}>Chọn VIP</button>
+                      <button onClick={() => setSelectedSeats(seatMap.flat().filter(s => s.type === "sweetbox" && s.status === "available").map(s => s.id))} style={{ padding: "7px 12px", background: `${PRIMARY}15`, border: `1px solid ${PRIMARY}40`, borderRadius: 8, color: PRIMARY, cursor: "pointer", fontSize: 12 }}>Chọn Sweetbox</button>
+                    </div>
+                    <div style={{ display: "flex", gap: 8 }}>
+                      <button onClick={() => setSelectedSeats([])} style={{ padding: "8px 14px", background: surface2, border: `1px solid ${border}`, borderRadius: 8, color: text, cursor: "pointer", fontSize: 13 }}>Đặt lại</button>
+                      <button
+                        onClick={() => { if (selectedSeats.length > 0) setShowPricePanel(true); }}
+                        style={{ padding: "8px 16px", background: selectedSeats.length > 0 ? "#FFC107" : surface2, border: "none", borderRadius: 8, color: selectedSeats.length > 0 ? "#000" : textMuted, cursor: selectedSeats.length > 0 ? "pointer" : "default", fontSize: 13, fontWeight: 600, display: "flex", alignItems: "center", gap: 6 }}
+                      >
+                        <DollarSign size={14} /> Đặt lại giá vé
+                      </button>
+                      <button style={{ padding: "8px 16px", background: PRIMARY, border: "none", borderRadius: 8, color: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 600, display: "flex", alignItems: "center", gap: 6 }}>
+                        <Save size={14} /> Lưu sơ đồ
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          )}
+
+          {/* Price Panel Modal */}
+          {showPricePanel && (
+            <Modal title={`Đặt lại giá vé — ${selectedSeats.length} ghế đã chọn`} onClose={() => setShowPricePanel(false)}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+                {/* Selected seats display */}
+                <div style={{ background: "#1e1e21", borderRadius: 10, padding: 14 }}>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: "#8b8b8f", marginBottom: 10 }}>Ghế đang chỉnh giá</div>
+                  <div style={{ display: "flex", flexWrap: "wrap" as const, gap: 6 }}>
+                    {selectedSeats.slice(0, 24).map(s => (
+                      <span key={s} style={{ background: "#6366f120", border: "1px solid #6366f140", color: "#a5b4fc", padding: "2px 8px", borderRadius: 5, fontSize: 12, fontFamily: "monospace" }}>{s}</span>
+                    ))}
+                    {selectedSeats.length > 24 && <span style={{ color: "#8b8b8f", fontSize: 12 }}>+{selectedSeats.length - 24} ghế nữa</span>}
+                  </div>
+                </div>
+
+                {/* Price inputs */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: "#f1f1f1" }}>Cập nhật giá theo loại ghế</div>
+                  {[
+                    { key: "normal" as const, label: "Ghế thường", desc: "Hàng C–F", color: "#28A745", icon: "🪑" },
+                    { key: "vip" as const, label: "Ghế VIP", desc: "Hàng A–B", color: "#FFC107", icon: "⭐" },
+                    { key: "sweetbox" as const, label: "Ghế Sweetbox (Đôi)", desc: "Hàng G–H", color: PRIMARY, icon: "💑" },
+                  ].map(p => (
+                    <div key={p.key} style={{ display: "flex", alignItems: "center", gap: 14, padding: "14px 16px", background: `${p.color}10`, border: `1px solid ${p.color}30`, borderRadius: 10 }}>
+                      <div style={{ fontSize: 22 }}>{p.icon}</div>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: 13, fontWeight: 600, color: "#f1f1f1" }}>{p.label}</div>
+                        <div style={{ fontSize: 11, color: "#8b8b8f", marginTop: 1 }}>{p.desc}</div>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                        <input
+                          value={seatPrices[p.key]}
+                          onChange={e => setSeatPrices(prev => ({ ...prev, [p.key]: e.target.value }))}
+                          style={{ width: 100, padding: "8px 10px", background: "#1e1e21", border: `1px solid ${p.color}60`, borderRadius: 8, color: p.color, fontSize: 14, fontWeight: 700, outline: "none", textAlign: "right" as const }}
+                        />
+                        <span style={{ fontSize: 12, color: "#8b8b8f" }}>đ</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Quick presets */}
+                <div>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: "#8b8b8f", marginBottom: 8 }}>Mẫu giá nhanh</div>
+                  <div style={{ display: "flex", gap: 8 }}>
+                    {[
+                      { label: "Ngày thường", prices: { normal: "95.000", vip: "150.000", sweetbox: "280.000" } },
+                      { label: "Cuối tuần", prices: { normal: "120.000", vip: "180.000", sweetbox: "320.000" } },
+                      { label: "Ngày lễ", prices: { normal: "140.000", vip: "210.000", sweetbox: "380.000" } },
+                    ].map(preset => (
+                      <button key={preset.label} onClick={() => setSeatPrices(preset.prices)} style={{ flex: 1, padding: "8px", background: "#1e1e21", border: "1px solid #2a2a2e", borderRadius: 8, color: "#c4c4c8", fontSize: 12, cursor: "pointer", fontWeight: 500 }}>{preset.label}</button>
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ display: "flex", gap: 10, justifyContent: "flex-end", paddingTop: 4 }}>
+                  <button onClick={() => setShowPricePanel(false)} style={{ padding: "9px 18px", background: "#1e1e21", border: "1px solid #2a2a2e", borderRadius: 8, color: "#f1f1f1", cursor: "pointer", fontSize: 13 }}>Hủy</button>
+                  <button onClick={() => { setShowPricePanel(false); setPriceApplied(true); setTimeout(() => setPriceApplied(false), 3000); }} style={{ padding: "9px 18px", background: "#FFC107", border: "none", borderRadius: 8, color: "#000", cursor: "pointer", fontSize: 13, fontWeight: 700, display: "flex", alignItems: "center", gap: 6 }}>
+                    <CheckCircle2 size={15} /> Áp dụng giá mới
+                  </button>
+                </div>
+              </div>
+            </Modal>
           )}
 
           {/* TICKETS */}
