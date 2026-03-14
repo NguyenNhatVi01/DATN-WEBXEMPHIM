@@ -1,6 +1,7 @@
 import { useEffect, useState, type ComponentType } from "react";
 
 import { modules as discoveredModules } from "./.generated/mockup-components";
+import { Dashboard } from "./components/mockups/cinema-admin/Dashboard";
 
 type ModuleMap = Record<string, () => Promise<Record<string, unknown>>>;
 
@@ -140,7 +141,8 @@ function App() {
     );
   }
 
-  return <Gallery />;
+  // Default to the main dashboard UI for the app.
+  return <Dashboard />;
 }
 
 export default App;
